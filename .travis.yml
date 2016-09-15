@@ -1,0 +1,61 @@
+sudo: required
+dist: trusty
+language: ruby
+
+before_install:
+before_install:
+- gem install asciidoctor -v 1.5.2
+- gem install tilt
+- sudo pip install git+https://github.com/gitenberg-dev/gitberg
+- sudo pip install pillow
+- sudo pip install cssutils
+- sudo pip install docutils
+- sudo pip install roman
+- sudo pip install git+https://github.com/gitenberg-dev/pg-epubmaker
+script:
+- VERSION=`ruby -e "require 'yaml'; meta = YAML.load_file('metadata.yaml'); puts meta['_version'];"`
+- git clone https://github.com/gitenberg-dev/asciidoctor-htmlbook.git
+- sudo pip install -r asciidoctor-htmlbook/gitberg-machine/requirements.txt
+
+- /usr/bin/python -c "from gitenberg import travis; travis.build_epub()"
+- ebook-convert book.epub book.mobi
+- xvfb-run ebook-convert book.epub book.pdf
+branches:
+  only:
+  - master
+notifications:
+  webhooks:
+    urls:
+      - https://unglue.it/api/travisci/webhook
+    on_success: always
+    on_failure: never
+    on_start: never
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: dHQIEk2tzz6LEHwgwrWWWRqwsCrHg/73dLMURYf/FjOtIxnBc0Q3xCBAuQvAyN6i6AW03TR5r11lukbFwiuQJ/4iqgSSqODFktrG2wsd9/C9LrcmqmJiUy4AqhYM4z2dLBtNLd142FRtDMb4GOcfodcQh9dgnDjpUbQzgScJBMtELq7YAUn5X+iSmIzpKe+WlqnL0emMk90Qip5KaInwU5Vls+wtifc0cmJ5XTxgth+19wD6KB13tePhO6Q4+5W1BwLwO03hZmOuv1WCNb0jFjMc306HLzu2Sb2VLpFQYuU3XpYzSy0cr/ou+21vaa4+FXJ/6+j1CaZgpnViv0+YaBXYMZBOobl1nxeISU+8A6/ZxFDh109ER222nqB7xfC+hT0ouHEzGoBj89PueyuX8WpvTtRvUjU67XEC3vsd+sRxZcHdklepI+1kp/R51iQV5Vu1pFphi7ZskcyCKCDtCSvqegRyEuv63YKlALASokL/UNArw4jeRChvsYGgp0xJupYg00IadHdjC9Oeewa0TDI6VlmGysAxjh5nY8vHwfSb8uUQTLeo5+vFOqt3kfsuZLNo7PSefvrFBzXTPBO2WAnsi89RDGO0ip7f0NnFV/4ttCezuaqZioC6WGgfVz36GJBw4wdzdN8vGkD5rhHTBkcPcybuqhayMFsAU6vVFbc=
+  file:
+    - book.epub
+    - book.mobi
+    - book.pdf
+  "on":
+    repo: GITenberg/Memoirs-of-Jean-Fran-ois-Paul-de-Gondi-Cardinal-de-Retz---Volume-4_3845
+addons:
+  apt:
+    packages:
+    - xsltproc
+    - xvfb
+    - calibre
+    - python-pip
+    - git
+    - python-dev
+    - libjpeg-dev
+    - libpng-dev
+    - libfreetype6
+    - libfreetype6-dev
+    - zlib1g-dev
+    - python-lxml
+    - libxml2-dev
+    - libxslt1-dev
+    - tidy
