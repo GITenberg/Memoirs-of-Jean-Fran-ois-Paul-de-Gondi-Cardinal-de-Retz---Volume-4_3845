@@ -1,5 +1,8 @@
 _repo: Memoirs-of-Jean-Fran-ois-Paul-de-Gondi-Cardinal-de-Retz---Volume-4_3845
-_version: 0.1.0
+_version: 0.2.0
+covers:
+- cover_type: generated
+  image_path: cover.png
 creator:
   author:
     agent_name: Retz, Jean François Paul de Gondi de
@@ -9,6 +12,8 @@ creator:
     url: http://www.gutenberg.org/2009/agents/1329
     wikipedia: http://en.wikipedia.org/wiki/Jean_Fran%C3%A7ois_Paul_de_Gondi%2C_cardinal_de_Retz
 description: ''
+edition_identifiers:
+  edition_id: http://www.gutenberg.org/ebooks/3845#Memoirs-of-Jean-Fran-ois-Paul-de-Gondi-Cardinal-de-Retz---Volume-4
 gutenberg_issued: '2004-12-02'
 gutenberg_type: Text
 identifiers:
